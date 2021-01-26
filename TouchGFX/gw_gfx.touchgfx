@@ -1,0 +1,179 @@
+{
+  "Application": {
+    "Screens": [
+      {
+        "Components": [
+          {
+            "Type": "BoxWithBorder",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 255
+            },
+            "BorderColor": {
+              "Red": 255,
+              "Green": 0,
+              "Blue": 0
+            },
+            "BorderSize": 5,
+            "Alpha": 255,
+            "Name": "boxWithBorder1",
+            "X": 0,
+            "Y": 0,
+            "Width": 320,
+            "Height": 240,
+            "Visible": true,
+            "LockPosition": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Type": "Shape",
+            "FileNameImage": "",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Points": [
+              {
+                "X": 40.0,
+                "Y": 0.0
+              },
+              {
+                "X": 80.0,
+                "Y": 40.0
+              },
+              {
+                "X": 40.0,
+                "Y": 80.0
+              },
+              {
+                "X": 0.0,
+                "Y": 40.0
+              }
+            ],
+            "Angle": 0.0,
+            "XScale": 1.0,
+            "YScale": 1.0,
+            "XOrigin": 0.0,
+            "YOrigin": 0.0,
+            "Alpha": 255,
+            "Name": "shape1",
+            "X": -106,
+            "Y": 65,
+            "Width": 80,
+            "Height": 80,
+            "Visible": true,
+            "LockPosition": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Type": "Shape",
+            "Color": {
+              "Red": 0,
+              "Green": 255,
+              "Blue": 0
+            },
+            "Points": [
+              {
+                "X": 40.0,
+                "Y": 0.0
+              },
+              {
+                "X": 80.0,
+                "Y": 40.0
+              },
+              {
+                "X": 40.0,
+                "Y": 80.0
+              },
+              {
+                "X": 0.0,
+                "Y": 40.0
+              }
+            ],
+            "Angle": 0.0,
+            "XScale": 1.0,
+            "YScale": 1.0,
+            "XOrigin": 0.0,
+            "YOrigin": 0.0,
+            "Alpha": 255,
+            "Name": "shape2",
+            "X": 121,
+            "Y": 80,
+            "Width": 79,
+            "Height": 81,
+            "Visible": true,
+            "LockPosition": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          }
+        ],
+        "Interactions": [],
+        "Name": "screen",
+        "OverrideDefaultBufferSize": false,
+        "CanvasBufferSize": 4800
+      }
+    ],
+    "CustomContainerDefinitions": [],
+    "Name": "gw_gfx",
+    "Resolution": {
+      "Width": 320,
+      "Height": 240
+    },
+    "SelectedColorDepth": 16,
+    "StartupScreenName": "screen",
+    "SelectedStartupLanguage": "GB",
+    "Skin": "Blue",
+    "TouchGfxPath": "../Middlewares/ST/touchgfx",
+    "UIPath": ".",
+    "AvailableColorDepths": [
+      16
+    ],
+    "AvailableLCDs": {
+      "16": "LCD16bpp"
+    },
+    "AvailableSections": [
+      "ExtFlashSection",
+      "IntFlashSection"
+    ],
+    "AvailableResolutions": [
+      {
+        "Width": 320,
+        "Height": 240
+      }
+    ],
+    "PhysicalButtons": [],
+    "FrameworkFeatures": {
+      "LCD16bpp": {
+        "Id": "LCD16bpp",
+        "Features": [
+          {
+            "Id": "RGB565",
+            "IsEnabled": true
+          }
+        ]
+      }
+    },
+    "GenerateAssetsCommand": "make -f simulator/gcc/Makefile assets -j8",
+    "PostGenerateCommand": "touchgfx update_project --project-file=simulator/msvs/Application.vcxproj",
+    "PostGenerateTargetCommand": "touchgfx update_project --project-file=../gw_gfx.ioc --platform=m7",
+    "CompileSimulatorCommand": "make -f simulator/gcc/Makefile -j8",
+    "RunSimulatorCommand": "build\\bin\\simulator.exe",
+    "LandscapeSkinX": 0,
+    "LandscapeSkinY": 0,
+    "PortraitSkinX": 0,
+    "PortraitSkinY": 0,
+    "DisplayOrientation": "Landscape",
+    "Family": "STM32H7"
+  },
+  "Version": "4.16.0"
+}
