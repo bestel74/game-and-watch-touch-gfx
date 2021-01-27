@@ -2,7 +2,8 @@
 #include "stm32h7xx_hal.h"
 #include "main.h"
 
-uint16_t framebuffer[320 * 240];
+uint16_t framebuffer1[320 * 240];
+uint16_t framebuffer2[320 * 240];
 
 void lcd_backlight_off() {
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
@@ -133,7 +134,4 @@ void lcd_init(SPI_HandleTypeDef *spi, LTDC_HandleTypeDef *ltdc) {
   HAL_Delay(2);
   // CS
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);
-
-
-  HAL_LTDC_SetAddress(ltdc,(uint32_t) &framebuffer,0);
 }

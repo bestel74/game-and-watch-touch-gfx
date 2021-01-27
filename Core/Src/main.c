@@ -45,6 +45,8 @@
 
 CRC_HandleTypeDef hcrc;
 
+DMA2D_HandleTypeDef hdma2d;
+
 LTDC_HandleTypeDef hltdc;
 
 OSPI_HandleTypeDef hospi1;
@@ -70,6 +72,7 @@ static void MX_OCTOSPI1_Init(void);
 static void MX_SAI1_Init(void);
 static void MX_RTC_Init(void);
 static void MX_CRC_Init(void);
+static void MX_DMA2D_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -121,6 +124,7 @@ int main(void)
   MX_SAI1_Init();
   MX_RTC_Init();
   MX_CRC_Init();
+  MX_DMA2D_Init();
   MX_TouchGFX_Init();
 
   /* Initialize interrupts */
@@ -128,7 +132,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   lcd_init(&hspi2, &hltdc);
-  memset(framebuffer, 0xff, 320*240*2);
+  memset(framebuffer1, 0xff, 320*240*2);
+  memset(framebuffer2, 0xff, 320*240*2);
 
   /* USER CODE END 2 */
 
@@ -136,10 +141,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+
     /* USER CODE END WHILE */
 
   MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
+
+  	  HAL_Delay(1);
   }
   /* USER CODE END 3 */
 }
@@ -276,6 +285,48 @@ static void MX_CRC_Init(void)
 }
 
 /**
+  * @brief DMA2D Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_DMA2D_Init(void)
+{
+
+  /* USER CODE BEGIN DMA2D_Init 0 */
+
+  /* USER CODE END DMA2D_Init 0 */
+
+  /* USER CODE BEGIN DMA2D_Init 1 */
+
+  /* USER CODE END DMA2D_Init 1 */
+  hdma2d.Instance = DMA2D;
+  hdma2d.Init.Mode = DMA2D_M2M;
+  hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB565;
+  hdma2d.Init.OutputOffset = 0;
+  hdma2d.Init.BytesSwap = DMA2D_BYTES_REGULAR;
+  hdma2d.Init.LineOffsetMode = DMA2D_LOM_PIXELS;
+  hdma2d.LayerCfg[1].InputOffset = 0;
+  hdma2d.LayerCfg[1].InputColorMode = DMA2D_INPUT_RGB565;
+  hdma2d.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
+  hdma2d.LayerCfg[1].InputAlpha = 0;
+  hdma2d.LayerCfg[1].AlphaInverted = DMA2D_REGULAR_ALPHA;
+  hdma2d.LayerCfg[1].RedBlueSwap = DMA2D_RB_REGULAR;
+  hdma2d.LayerCfg[1].ChromaSubSampling = DMA2D_NO_CSS;
+  if (HAL_DMA2D_Init(&hdma2d) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_DMA2D_ConfigLayer(&hdma2d, 1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN DMA2D_Init 2 */
+
+  /* USER CODE END DMA2D_Init 2 */
+
+}
+
+/**
   * @brief LTDC Initialization Function
   * @param None
   * @retval None
@@ -325,7 +376,7 @@ static void MX_LTDC_Init(void)
   pLayerCfg.ImageWidth = 320;
   pLayerCfg.ImageHeight = 240;
   pLayerCfg.Backcolor.Blue = 0;
-  pLayerCfg.Backcolor.Green = 255;
+  pLayerCfg.Backcolor.Green = 0;
   pLayerCfg.Backcolor.Red = 0;
   if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg, 0) != HAL_OK)
   {

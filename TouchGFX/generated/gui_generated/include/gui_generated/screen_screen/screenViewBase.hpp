@@ -8,8 +8,9 @@
 #include <mvp/View.hpp>
 #include <gui/screen_screen/screenPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/widgets/BoxWithBorder.hpp>
-#include <touchgfx/widgets/canvas/Shape.hpp>
+#include <touchgfx/widgets/AnimatedImage.hpp>
+#include <touchgfx/widgets/graph/GraphScroll.hpp>
+#include <touchgfx/widgets/graph/GraphElements.hpp>
 #include <touchgfx/widgets/canvas/PainterRGB565.hpp>
 
 class screenViewBase : public touchgfx::View<screenPresenter>
@@ -18,6 +19,14 @@ public:
     screenViewBase();
     virtual ~screenViewBase() {}
     virtual void setupScreen();
+
+    /*
+     * Virtual Action Handlers
+     */
+    virtual void add_new_data()
+    {
+        // Override and implement this function in screen
+    }
 
 protected:
     FrontendApplication& application() {
@@ -28,13 +37,23 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    touchgfx::BoxWithBorder boxWithBorder1;
-    touchgfx::Shape<4> shape1;
-    touchgfx::PainterRGB565 shape1Painter;
-    touchgfx::Shape<4> shape2;
-    touchgfx::PainterRGB565 shape2Painter;
+    touchgfx::AnimatedImage animatedImage1;
+    touchgfx::GraphScroll<100> dynamicGraph1;
+    touchgfx::GraphElementLine dynamicGraph1Line1;
+    touchgfx::PainterRGB565 dynamicGraph1Line1Painter;
+    touchgfx::GraphElementGridY dynamicGraph1MajorYAxisGrid;
 
 private:
+
+    /*
+     * Callback Declarations
+     */
+    touchgfx::Callback<screenViewBase, const touchgfx::AnimatedImage&> animationEndedCallback;
+
+    /*
+     * Callback Handler Declarations
+     */
+    void animationEndedCallbackHandler(const touchgfx::AnimatedImage& src);
 
     /*
      * Canvas Buffer Size

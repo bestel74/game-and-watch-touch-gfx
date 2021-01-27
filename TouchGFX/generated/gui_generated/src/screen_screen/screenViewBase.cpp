@@ -3,8 +3,10 @@
 /*********************************************************************************/
 #include <gui_generated/screen_screen/screenViewBase.hpp>
 #include <touchgfx/Color.hpp>
+#include "BitmapDatabase.hpp"
 
-screenViewBase::screenViewBase()
+screenViewBase::screenViewBase() :
+    animationEndedCallback(this, &screenViewBase::animationEndedCallbackHandler)
 {
 
     touchgfx::CanvasWidgetRenderer::setupBuffer(canvasBuffer, CANVAS_BUFFER_SIZE);
@@ -12,36 +14,48 @@ screenViewBase::screenViewBase()
     __background.setPosition(0, 0, 320, 240);
     __background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
 
-    boxWithBorder1.setPosition(0, 0, 320, 240);
-    boxWithBorder1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 255));
-    boxWithBorder1.setBorderColor(touchgfx::Color::getColorFrom24BitRGB(255, 0, 0));
-    boxWithBorder1.setBorderSize(5);
+    animatedImage1.setXY(279, 9);
+    animatedImage1.setBitmaps(BITMAP_GOLD_1_ID, BITMAP_GOLD_4_ID);
+    animatedImage1.setUpdateTicksInterval(12);
+    animatedImage1.startAnimation(false, true, true);
+    animatedImage1.setDoneAction(animationEndedCallback);
 
-    shape1.setPosition(-106, 65, 80, 80);
-    shape1.setOrigin(0.000f, 0.000f);
-    shape1.setScale(1.000f, 1.000f);
-    shape1.setAngle(0.000f);
-    shape1Painter.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
-    shape1.setPainter(shape1Painter);
-    const touchgfx::AbstractShape::ShapePoint<float> shape1Points[4] = { { 40.000f, 0.000f }, { 80.000f, 40.000f }, { 40.000f, 80.000f }, { 0.000f, 40.000f } };
-    shape1.setShape(shape1Points);
+    dynamicGraph1.setScale(1);
+    dynamicGraph1.setPosition(0, 0, 320, 240);
+    dynamicGraph1.setGraphAreaMargin(0, 0, 0, 0);
+    dynamicGraph1.setGraphAreaPadding(0, 0, 0, 0);
+    dynamicGraph1.setGraphRangeY(0, 100);
 
-    shape2.setPosition(121, 80, 79, 81);
-    shape2.setOrigin(0.000f, 0.000f);
-    shape2.setScale(1.000f, 1.000f);
-    shape2.setAngle(0.000f);
-    shape2Painter.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 255, 0));
-    shape2.setPainter(shape2Painter);
-    const touchgfx::AbstractShape::ShapePoint<float> shape2Points[4] = { { 40.000f, 0.000f }, { 80.000f, 40.000f }, { 40.000f, 80.000f }, { 0.000f, 40.000f } };
-    shape2.setShape(shape2Points);
+    dynamicGraph1MajorYAxisGrid.setScale(1);
+    dynamicGraph1MajorYAxisGrid.setColor(touchgfx::Color::getColorFrom24BitRGB(140, 140, 140));
+    dynamicGraph1MajorYAxisGrid.setInterval(25);
+    dynamicGraph1MajorYAxisGrid.setLineWidth(1);
+    dynamicGraph1MajorYAxisGrid.setAlpha(124);
+    dynamicGraph1.addGraphElement(dynamicGraph1MajorYAxisGrid);
+
+    dynamicGraph1Line1.setScale(1);
+    dynamicGraph1Line1Painter.setColor(touchgfx::Color::getColorFrom24BitRGB(20, 151, 197));
+    dynamicGraph1Line1.setPainter(dynamicGraph1Line1Painter);
+    dynamicGraph1Line1.setLineWidth(2);
+    dynamicGraph1.addGraphElement(dynamicGraph1Line1);
 
     add(__background);
-    add(boxWithBorder1);
-    add(shape1);
-    add(shape2);
+    add(animatedImage1);
+    add(dynamicGraph1);
 }
 
 void screenViewBase::setupScreen()
 {
 
+}
+
+void screenViewBase::animationEndedCallbackHandler(const touchgfx::AnimatedImage& src)
+{
+    if (&src == &animatedImage1)
+    {
+        //int_update
+        //When animatedImage1 animation ended call virtual function
+        //Call add_new_data
+        add_new_data();
+    }
 }

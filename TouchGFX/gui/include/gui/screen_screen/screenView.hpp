@@ -11,6 +11,8 @@ public:
     virtual ~screenView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
+    virtual void add_new_data();
 protected:
 };
 
