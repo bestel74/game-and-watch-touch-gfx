@@ -9,9 +9,9 @@
 #include <gui/screen_screen/screenPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/AnimatedImage.hpp>
-#include <touchgfx/widgets/graph/GraphScroll.hpp>
+#include <touchgfx/widgets/graph/GraphWrapAndOverwrite.hpp>
 #include <touchgfx/widgets/graph/GraphElements.hpp>
-#include <touchgfx/widgets/canvas/PainterRGB565.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class screenViewBase : public touchgfx::View<screenPresenter>
 {
@@ -38,10 +38,19 @@ protected:
      */
     touchgfx::Box __background;
     touchgfx::AnimatedImage animatedImage1;
-    touchgfx::GraphScroll<100> dynamicGraph1;
-    touchgfx::GraphElementLine dynamicGraph1Line1;
-    touchgfx::PainterRGB565 dynamicGraph1Line1Painter;
-    touchgfx::GraphElementGridY dynamicGraph1MajorYAxisGrid;
+    touchgfx::GraphWrapAndOverwrite<100> dynamicGraph1;
+    touchgfx::GraphElementHistogram dynamicGraph1Histogram1;
+    touchgfx::GraphElementGridX dynamicGraph1MajorXAxisGrid;
+touchgfx::GraphElementVerticalGapLine dynamicGraph1VerticalFrontline;
+    touchgfx::TextAreaWithTwoWildcards stat_1;
+
+    /*
+     * Wildcard Buffers
+     */
+    static const uint16_t STAT_1BUFFER1_SIZE = 16;
+    touchgfx::Unicode::UnicodeChar stat_1Buffer1[STAT_1BUFFER1_SIZE];
+    static const uint16_t STAT_1BUFFER2_SIZE = 16;
+    touchgfx::Unicode::UnicodeChar stat_1Buffer2[STAT_1BUFFER2_SIZE];
 
 private:
 
@@ -55,11 +64,6 @@ private:
      */
     void animationEndedCallbackHandler(const touchgfx::AnimatedImage& src);
 
-    /*
-     * Canvas Buffer Size
-     */
-    static const uint16_t CANVAS_BUFFER_SIZE = 4800;
-    uint8_t canvasBuffer[CANVAS_BUFFER_SIZE];
 };
 
 #endif // SCREENVIEWBASE_HPP

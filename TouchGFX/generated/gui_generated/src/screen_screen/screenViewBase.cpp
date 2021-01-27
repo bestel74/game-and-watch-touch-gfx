@@ -4,12 +4,11 @@
 #include <gui_generated/screen_screen/screenViewBase.hpp>
 #include <touchgfx/Color.hpp>
 #include "BitmapDatabase.hpp"
+#include <texts/TextKeysAndLanguages.hpp>
 
 screenViewBase::screenViewBase() :
     animationEndedCallback(this, &screenViewBase::animationEndedCallbackHandler)
 {
-
-    touchgfx::CanvasWidgetRenderer::setupBuffer(canvasBuffer, CANVAS_BUFFER_SIZE);
 
     __background.setPosition(0, 0, 320, 240);
     __background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
@@ -26,22 +25,36 @@ screenViewBase::screenViewBase() :
     dynamicGraph1.setGraphAreaPadding(0, 0, 0, 0);
     dynamicGraph1.setGraphRangeY(0, 100);
 
-    dynamicGraph1MajorYAxisGrid.setScale(1);
-    dynamicGraph1MajorYAxisGrid.setColor(touchgfx::Color::getColorFrom24BitRGB(140, 140, 140));
-    dynamicGraph1MajorYAxisGrid.setInterval(25);
-    dynamicGraph1MajorYAxisGrid.setLineWidth(1);
-    dynamicGraph1MajorYAxisGrid.setAlpha(124);
-    dynamicGraph1.addGraphElement(dynamicGraph1MajorYAxisGrid);
+    dynamicGraph1MajorXAxisGrid.setScale(1);
+    dynamicGraph1MajorXAxisGrid.setColor(touchgfx::Color::getColorFrom24BitRGB(20, 151, 197));
+    dynamicGraph1MajorXAxisGrid.setInterval(10);
+    dynamicGraph1MajorXAxisGrid.setLineWidth(1);
+    dynamicGraph1.addGraphElement(dynamicGraph1MajorXAxisGrid);
 
-    dynamicGraph1Line1.setScale(1);
-    dynamicGraph1Line1Painter.setColor(touchgfx::Color::getColorFrom24BitRGB(20, 151, 197));
-    dynamicGraph1Line1.setPainter(dynamicGraph1Line1Painter);
-    dynamicGraph1Line1.setLineWidth(2);
-    dynamicGraph1.addGraphElement(dynamicGraph1Line1);
+    dynamicGraph1Histogram1.setScale(1);
+    dynamicGraph1Histogram1.setColor(touchgfx::Color::getColorFrom24BitRGB(20, 151, 197));
+    dynamicGraph1Histogram1.setBarWidth(4);
+    dynamicGraph1Histogram1.setBaseline(0);
+    dynamicGraph1.addGraphElement(dynamicGraph1Histogram1);
+
+    dynamicGraph1VerticalFrontline.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 0, 0));
+    dynamicGraph1VerticalFrontline.setGapLineWidth(1);
+    dynamicGraph1VerticalFrontline.setAlpha(75);
+    dynamicGraph1.addGraphElement(dynamicGraph1VerticalFrontline);
+
+    stat_1.setPosition(0, 213, 320, 27);
+    stat_1.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 252, 238));
+    stat_1.setLinespacing(0);
+    touchgfx::Unicode::snprintf(stat_1Buffer1, STAT_1BUFFER1_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID5).getText());
+    stat_1.setWildcard1(stat_1Buffer1);
+    touchgfx::Unicode::snprintf(stat_1Buffer2, STAT_1BUFFER2_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID4).getText());
+    stat_1.setWildcard2(stat_1Buffer2);
+    stat_1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID3));
 
     add(__background);
     add(animatedImage1);
     add(dynamicGraph1);
+    add(stat_1);
 }
 
 void screenViewBase::setupScreen()

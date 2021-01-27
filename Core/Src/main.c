@@ -23,6 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "stdlib.h"
 #include "string.h"
 #include "lcd.h"
 /* USER CODE END Includes */
@@ -59,7 +60,7 @@ DMA_HandleTypeDef hdma_sai1_a;
 SPI_HandleTypeDef hspi2;
 
 /* USER CODE BEGIN PV */
-
+int results[365] = {0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -139,16 +140,28 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+  uint8_t tmp[365];
+
   while (1)
   {
+	  for(int i=0 ; i < 1000 ; i++)
+	  {
+		  uint16_t count=0;
+		  memset(tmp, 0, 365);
 
+		  while(++tmp[rand()%365] < 2)
+		  {
+			  count++;
+		  }
+
+		  results[count]++;
+	  }
 
     /* USER CODE END WHILE */
 
-  MX_TouchGFX_Process();
+	MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
-
-  	  HAL_Delay(1);
   }
   /* USER CODE END 3 */
 }
@@ -653,6 +666,27 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+ /**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.
